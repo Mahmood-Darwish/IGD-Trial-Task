@@ -68,22 +68,6 @@ public class PlayerControl : MonoBehaviour
         return newAudio;
     }
 
-    // Jump physics in Fixedupdate(). Checking for life and then checking if player can jump or double jump.
-    private void FixedUpdate()
-    {
-        if (Alive)
-        {
-            if (verticalMovement && canJump)
-            {
-                PlayerRigid.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
-            }
-            if (verticalMovement && canDoubleJump)
-            {
-                PlayerRigid.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
-                canDoubleJump = false;
-            }
-        }
-    }
 
     // If alive take input and calculate movement. If dead and dead timer is up go back to checkPoint.
     void Update()
@@ -104,6 +88,15 @@ public class PlayerControl : MonoBehaviour
             transform.position = temp;
             animo.SetFloat("speed", Mathf.Abs(horizontalMovement));
             Flip(horizontalMovement);  // Dealing with going in the other direction.
+            if (verticalMovement && canJump)
+            {
+                PlayerRigid.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
+            }
+            if (verticalMovement && canDoubleJump)
+            {
+                PlayerRigid.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
+                canDoubleJump = false;
+            }
         }
         else
         {
